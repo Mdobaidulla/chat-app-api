@@ -17,6 +17,11 @@ const usersSchema = new mongoose.Schema({
         type: String,
         required: true, 
     },
+    image: { 
+        data: Buffer, 
+        contentType: String,
+        path: String, 
+    } ,
     isActive:{
         type: Boolean,
         default: false,
