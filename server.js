@@ -8,7 +8,6 @@ const app = express ();
 const db = mongoose.connection;
 
 
-
 //Port
 const PORT = process.env.PORT || 3000;
 
@@ -35,8 +34,6 @@ app.use(express.static('public'));
 // populates req.body with parsed info from forms - if no data from forms will return an empty object {}
 app.use(express.urlencoded({ extended: false }));// extended: false - does not allow nested objects in query strings
 app.use(express.json());// returns middleware that only parses JSON - may or may not need it depending on your project
-//use method override
-// app.use(methodOverride('_method'));
 
 
 //ALL CONTROLLERS
