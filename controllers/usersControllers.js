@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { response } = require('express');
+const bcrypt = require('bcrypt')
 const Users= require('../models/users');
 
 //GET_ALL_USERS
@@ -21,7 +22,6 @@ router.get('/:id', async (req, res)=>{
     });
     res.send(allUsers);
 })
-
 
  //POST
 //This route will add the a new user 
