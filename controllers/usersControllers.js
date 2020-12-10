@@ -55,6 +55,7 @@ router.post('/',upload.single('image'), async (req, res) =>{
         path: req.file.path,
      };
      req.body.image=finalImg;
+     req.body.password=bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
      //**********image upload */
      let user = await Users.create(req.body)
       //**********The Uploaded file will be removed from Upload folder
