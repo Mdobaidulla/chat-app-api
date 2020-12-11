@@ -2,6 +2,12 @@ const router = require('express').Router();
 const { response } = require('express');
 const Chatrooms= require('../models/chatrooms');
 
+router.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 //INDEX ROUTE FOR CHATROOM
 //This route will read all the chatrooms from chat-app-api database
 router.get('/', async (req, res) => {
