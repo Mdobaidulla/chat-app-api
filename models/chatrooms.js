@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const chatroomsSchema = new mongoose.Schema({
-    chat_id: {
+    chatroom_id: {
         type: String,
         required: true, 
     },

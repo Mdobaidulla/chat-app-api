@@ -2,6 +2,12 @@ const router = require('express').Router();
 const { response } = require('express');
 const Chatrooms= require('../models/chatrooms');
 
+router.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 //INDEX ROUTE FOR CHATROOM
 //This route will read all the chatrooms from chat-app-api database
 router.get('/', async (req, res) => {
@@ -22,14 +28,22 @@ router.get('/:id', async (req, res)=>{
         } 
     });
     res.send(allChatrooms);
-})
+});
 
 //NEW ROUTE FOR CHATROOM
 //This route will add a new chatroom
-router.post('/new', async (req, res) =>{
+router.post('/', async (req, res) =>{
     console.log(req.body);
      let chatroom = await Chatrooms.create(req.body)
      res.send(chatroom)
- })
+ });
+
+//DELETE ROUTE FOR CHATROOM
+//This route will delete a chatroom
+ router.delete('/:id', async (req, res) =>{
+    console.log(req.body);
+     let chatroom = await Chatrooms.findByIdAndRemove(req.params.id)
+     res.send(chatroom)
+ });
 
  module.exports= router;

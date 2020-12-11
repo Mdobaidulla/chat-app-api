@@ -17,7 +17,11 @@ let storage = multer.diskStorage({
 let upload = multer({ storage: storage }); 
  //*******Fil Upload pre requisite ended here/
 
-
+ router.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 //GET_ALL_USERS
 //This route will read all the registered user from chat-app-api database
@@ -41,7 +45,7 @@ router.get('/:id', async (req, res)=>{
 }catch(e){
     console.log(e.getMessage());
 }
-})
+});
 
  //POST
 //This route will add the a new user 
