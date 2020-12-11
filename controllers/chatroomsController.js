@@ -22,14 +22,22 @@ router.get('/:id', async (req, res)=>{
         } 
     });
     res.send(allChatrooms);
-})
+});
 
 //NEW ROUTE FOR CHATROOM
 //This route will add a new chatroom
-router.post('/new', async (req, res) =>{
+router.post('/', async (req, res) =>{
     console.log(req.body);
      let chatroom = await Chatrooms.create(req.body)
      res.send(chatroom)
- })
+ });
+
+//DELETE ROUTE FOR CHATROOM
+//This route will delete a chatroom
+ router.delete('/:id', async (req, res) =>{
+    console.log(req.body);
+     let chatroom = await Chatrooms.findByIdAndRemove(req.params.id)
+     res.send(chatroom)
+ });
 
  module.exports= router;

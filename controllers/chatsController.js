@@ -10,6 +10,22 @@ router.get('/', async (req, res) => {
     res.send(allChats);
   });
 
+//SHOW ROUTE FOR CHATS IN CHATROOM
+//This route will read the specified chat from chat-app-api database
+router.get('/chatroom/:id', async (req, res)=>{
+    console.log('Index Route for chats in chatroom');
+    let allChats = await Chats.find({});
+    console.log(allChats);
+
+    let results = [];
+    allChats.forEach((chat, index) => {
+        if (chat["chatroom"] == req.params.id) {
+            results.push(chat);
+        }
+    });
+    res.send(results);
+});
+
 //SHOW ROUTE FOR CHAT
 //This route will read the specified chat from chat-app-api database
 router.get('/:id', async (req, res)=>{
@@ -22,14 +38,22 @@ router.get('/:id', async (req, res)=>{
         } 
     });
     res.send(allChats);
-})
+});
 
 //NEW ROUTE FOR CHAT
 //This route will add a new chat
-router.post('/new', async (req, res) =>{
+router.post('/', async (req, res) =>{
     console.log(req.body);
      let chat = await Chats.create(req.body)
      res.send(chat)
- })
+ });
+
+//DELETE ROUTE FOR CHAT
+//This route will delete a chat
+router.delete('/:id', async (req, res) =>{
+    console.log(req.body);
+     let chat = await Chats.findByIdAndRemove(req.params.id)
+     res.send(chat)
+ });
 
  module.exports= router;

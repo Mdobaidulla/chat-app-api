@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const chatsSchema = new mongoose.Schema({
-    chatsroom: {
+    chatroom: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Chatrooms',
     },
-    chat_message_id: {
+    chat_id: {
         type: String,
         required: true, 
     },

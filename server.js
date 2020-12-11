@@ -39,16 +39,18 @@ app.use(express.json());// returns middleware that only parses JSON - may or may
 //ALL CONTROLLERS
  const usersControllers = require('./controllers/usersControllers');
  const chatroomsController = require('./controllers/chatroomsController');
+ const chatsController = require('./controllers/chatsController');
 
- app.use('/chats', usersControllers);
+ app.use('/users', usersControllers);
  app.use('/chatrooms', chatroomsController);
-
+ app.use('/chats', chatsController);
 
 
 // ROUTES
 app.get('/' , (req, res) => {
   res.send("The app is working")
 });
+
 //___________________
 //Listener
 //___________________

@@ -40,7 +40,7 @@ router.get('/:id', async (req, res)=>{
 }catch(e){
     console.log(e.getMessage());
 }
-})
+});
 
  //POST
 //This route will add the a new user 
@@ -67,6 +67,6 @@ router.post('/',upload.single('image'), async (req, res) =>{
       })
      res.send(req.body)
 
- })
+ });
 
  module.exports= router;
