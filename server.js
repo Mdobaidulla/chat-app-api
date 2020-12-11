@@ -1,15 +1,27 @@
 
 //Dependencies
 const express = require('express');
+let cors = require('cors')
+
+
 // const methodOverride  = require('method-override');
 const mongoose = require ('mongoose');
 const session = require('express-session')
 const app = express ();
+
+
+//-----Starts socket from here------
+const http =require('http')
+const socketIO=require('socket.io')
+let server=http.createServer(app)
+let io=socketIO(server)
+//----socket works until here----
+
+
+
 const db = mongoose.connection;
-
-
 //Port
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 
 //Database
@@ -28,9 +40,9 @@ db.on('connected', () => console.log('mongo connected: ', MONGODB_URI));
 db.on('disconnected', () => console.log('mongo disconnected'));
 db.on('open' , ()=>{});
 
-
 //use public folder for static assets
 app.use(express.static('public'));
+app.use(cors())
 // populates req.body with parsed info from forms - if no data from forms will return an empty object {}
 app.use(express.urlencoded({ extended: false }));// extended: false - does not allow nested objects in query strings
 app.use(express.json());// returns middleware that only parses JSON - may or may not need it depending on your project
@@ -39,11 +51,13 @@ app.use(express.json());// returns middleware that only parses JSON - may or may
 //ALL CONTROLLERS
  const usersControllers = require('./controllers/usersControllers');
  const chatroomsController = require('./controllers/chatroomsController');
-
- app.use('/chats', usersControllers);
+ app.use('/users', usersControllers);
  app.use('/chatrooms', chatroomsController);
 
-
+//SOCKET
+io.on('connection', (socket)=>{
+  console.log("A new user is just connected");
+})
 
 // ROUTES
 app.get('/' , (req, res) => {

@@ -68,7 +68,6 @@ router.post('/',upload.single('image'), async (req, res) =>{
       console.log("The file is removed");
       })
      res.send(req.body)
-
  })
 
  module.exports= router;
