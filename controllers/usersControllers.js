@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { response } = require('express');
+const bcrypt = require('bcrypt')
 const Users= require('../models/users');
 //*********Uploading image***********
 let fs = require('fs'); 
@@ -58,6 +59,7 @@ router.post('/',upload.single('image'), async (req, res) =>{
         path: req.file.path,
      };
      req.body.image=finalImg;
+     req.body.password=bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
      //**********image upload */
      let user = await Users.create(req.body)
       //**********The Uploaded file will be removed from Upload folder
@@ -70,7 +72,6 @@ router.post('/',upload.single('image'), async (req, res) =>{
       console.log("The file is removed");
       })
      res.send(req.body)
-
- });
+ })
 
  module.exports= router;
