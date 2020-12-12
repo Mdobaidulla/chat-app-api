@@ -2,6 +2,10 @@ const router = require('express').Router();
 const { response } = require('express');
 const bcrypt = require('bcrypt')
 const Users= require('../models/users');
+
+// var http = require("http").Server(app);
+// var io = require("socket.io")(http);
+
 //*********Uploading image***********
 let fs = require('fs'); 
 let path = require('path'); 
@@ -28,23 +32,50 @@ let upload = multer({ storage: storage });
 router.get('/', async (req, res)=>{
     let allUsers = await Users.find({});
     res.send(allUsers);
-})
+});
+
+router.get('/first_name/:id', async (req, res)=>{
+    let allUsers = await Users.findById(req.params.id,(err, response)=>{
+        if (err){ 
+            console.log(err); 
+        } 
+        else{ 
+            console.log("Result : ", response); 
+        } 
+    });
+    res.send(allUsers["first_name"]);
+});
+
+router.get('/last_name/:id', async (req, res)=>{
+    let allUsers = await Users.findById(req.params.id,(err, response)=>{
+        if (err){ 
+            console.log(err); 
+        } 
+        else{ 
+            console.log("Result : ", response); 
+        } 
+    });
+    res.send(allUsers["last_name"]);
+});
 
 //GET_ONE_USER
 router.get('/:id', async (req, res)=>{
- try{
-    let allUsers = await Users.findById(req.params.id,(err, respons)=>{
-        if (err){  
-            res.send("Error:", err);
-        } 
-        else{ 
-            console.log("Result : ", respons); 
-            res.send(allUsers);
-        } 
-    });
-}catch(e){
-    console.log(e.getMessage());
-}
+    
+    let allUsers;
+    try{
+        allUsers = await Users.findById(req.params.id,(err, respons)=>{
+            if (err){  
+                res.send("Error:", err);
+            } 
+            else{ 
+                console.log("Result : ", respons); 
+                res.send(allUsers);
+            } 
+        });
+    }
+    catch(e){
+        console.log(e.getMessage());
+    }
 });
 
  //POST

@@ -8,7 +8,7 @@ let cors = require('cors')
 const mongoose = require ('mongoose');
 const session = require('express-session')
 const app = express ();
-
+app.use(cors())
 
 //-----Starts socket from here------
 const http =require('http')
@@ -42,7 +42,6 @@ db.on('open' , ()=>{});
 
 //use public folder for static assets
 app.use(express.static('public'));
-app.use(cors())
 // populates req.body with parsed info from forms - if no data from forms will return an empty object {}
 app.use(express.urlencoded({ extended: false }));// extended: false - does not allow nested objects in query strings
 app.use(express.json());// returns middleware that only parses JSON - may or may not need it depending on your project
@@ -51,8 +50,10 @@ app.use(express.json());// returns middleware that only parses JSON - may or may
 //ALL CONTROLLERS
  const usersControllers = require('./controllers/usersControllers');
  const chatroomsController = require('./controllers/chatroomsController');
+ const chatsController = require('./controllers/chatsController');
  app.use('/users', usersControllers);
  app.use('/chatrooms', chatroomsController);
+ app.use('/chats', chatsController);
 
 //SOCKET
 io.on('connection', (socket)=>{
