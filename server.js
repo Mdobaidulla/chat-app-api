@@ -12,9 +12,14 @@ app.use(cors())
 
 //-----Starts socket from here------
 const http =require('http')
-const socketIO=require('socket.io')
+// const socketIO=require('socket.io')
 let server=http.createServer(app)
-let io=socketIO(server)
+// let io=socketIO(server)
+const io = require('socket.io')(server, {
+  cors: {
+    origin: '*',
+  }
+});
 //----socket works until here----
 
 
@@ -65,8 +70,27 @@ app.get('/' , (req, res) => {
   res.send("The app is working")
 });
 
+// Expose the node_modules folder as static resources (to access socket.io.js in the browser)
+app.use('/static', express.static('node_modules'));
+
+io.on('connection', socket => {
+  console.log('New client connected')
+  
+  // just like on the client side, we have a socket.on method that takes a callback function
+  socket.on('text_message', (text_msg) => {
+    // once we get a 'change color' event from one of our clients, we will send it to the rest of the clients
+    // we make use of the socket.emit method again with the argument given to use from the callback function above
+    console.log('text_message: ', text_msg)
+    io.sockets.emit('text_message', text_msg)
+  })
+  
+  // disconnect is fired when a client leaves the server
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
+  })
+})
+
 //___________________
 //Listener
 //___________________
-app.listen(PORT, () => console.log( 'Listening on port:', PORT));
-
+server.listen(PORT, () => console.log( 'Listening on port:', PORT));
