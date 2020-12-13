@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt')
 
 const Users= require('../models/users');
 
+// var http = require("http").Server(app);
+// var io = require("socket.io")(http);
+
 //*********Uploading image***********
 let fs = require('fs'); 
 let path = require('path'); 
@@ -31,14 +34,51 @@ router.get('/', async (req, res)=>{
     let allUsers = await Users.find({});
     
     res.send(allUsers);
-})
+});
+
+
+router.get('/first_name/:id', async (req, res)=>{
+    let allUsers = await Users.findById(req.params.id,(err, response)=>{
+        if (err){ 
+            console.log(err); 
+        } 
+        else{ 
+            console.log("Result : ", response); 
+        } 
+    });
+    res.send(allUsers["first_name"]);
+});
+
+router.get('/last_name/:id', async (req, res)=>{
+    let allUsers = await Users.findById(req.params.id,(err, response)=>{
+        if (err){ 
+            console.log(err); 
+        } 
+        else{ 
+            console.log("Result : ", response); 
+        } 
+    });
+    res.send(allUsers["last_name"]);
+});
 
 //GET_ONE_USER
 router.get('/:id', async (req, res)=>{
- 
-    let user = await Users.findById(req.params.id)
-//     let imnage=`<img src=data:image/image/jpeg;base64,${user.image.data.toString('base64')}/>`;
-    res.send(user);
+    
+    let allUsers;
+    try{
+        allUsers = await Users.findById(req.params.id,(err, respons)=>{
+            if (err){  
+                res.send("Error:", err);
+            } 
+            else{ 
+                console.log("Result : ", respons); 
+                res.send(allUsers);
+            } 
+        });
+    }
+    catch(e){
+        console.log(e.getMessage());
+    }
 });
 
  //POST
@@ -68,11 +108,5 @@ router.post('/',upload.single('image'), async (req, res) =>{
      res.send(req.body)
  })
 
-
-
-
-
-
- 
 
  module.exports= router;

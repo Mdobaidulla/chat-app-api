@@ -16,6 +16,40 @@ router.get('/', async (req, res) => {
     res.send(allChatrooms);
   });
 
+  router.get('/chatroomWithUserId/:id', async (req, res)=>{
+    console.log('Index Route for chats in chatroom');
+    let allChatrooms = await Chatrooms.find({});
+    console.log(allChatrooms);
+
+    let results = [];
+    allChatrooms.forEach((chatroom, index) => {
+        let flag = false;
+
+        for (let i=0; i<chatroom["users"].length; i++) {
+            if (chatroom["users"][i] == req.params.id) {
+                flag = true;
+            }
+        }
+
+        if (flag == true) {
+            results.push(chatroom);
+        }
+    });
+    res.send(results);
+});
+
+router.get('/getAllUsers/:id', async (req, res)=>{
+    let allChatrooms = await Chatrooms.findById(req.params.id,(err, response)=>{
+        if (err){ 
+            console.log(err); 
+        } 
+        else{ 
+            console.log("Result : ", response); 
+        } 
+    });
+    res.send(allChatrooms.users);
+});
+
 //SHOW ROUTE FOR CHATROOM
 //This route will read the specified chatroom from chat-app-api database
 router.get('/:id', async (req, res)=>{

@@ -6,7 +6,7 @@ const chatsSchema = new mongoose.Schema({
     },
     chat_id: {
         type: String,
-        required: true, 
+        required: false, 
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
