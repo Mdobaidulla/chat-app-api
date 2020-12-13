@@ -29,6 +29,7 @@ router.get('/chatroom/:id', async (req, res)=>{
             results.push(chat);
         }
     });
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.send(results);
 });
 
