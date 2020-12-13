@@ -18,7 +18,6 @@ let io=socketIO(server)
 //----socket works until here----
 
 
-
 const db = mongoose.connection;
 //Port
 const PORT = process.env.PORT || 5000;
@@ -51,8 +50,10 @@ app.use(express.json());// returns middleware that only parses JSON - may or may
 //ALL CONTROLLERS
  const usersControllers = require('./controllers/usersControllers');
  const chatroomsController = require('./controllers/chatroomsController');
+ const sessionsController = require('./controllers/sessions_controller')
  app.use('/users', usersControllers);
  app.use('/chatrooms', chatroomsController);
+ app.use('/sessions', sessionsController)
 
 //SOCKET
 io.on('connection', (socket)=>{
