@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { response } = require('express');
 const bcrypt = require('bcrypt')
+
 const Users= require('../models/users');
 
 // var http = require("http").Server(app);
@@ -31,8 +32,10 @@ let upload = multer({ storage: storage });
 //This route will read all the registered user from chat-app-api database
 router.get('/', async (req, res)=>{
     let allUsers = await Users.find({});
+    
     res.send(allUsers);
 });
+
 
 router.get('/first_name/:id', async (req, res)=>{
     let allUsers = await Users.findById(req.params.id,(err, response)=>{
@@ -82,27 +85,28 @@ router.get('/:id', async (req, res)=>{
 //This route will add the a new user 
 router.post('/',upload.single('image'), async (req, res) =>{
     //*************Image upload */
-    var img = fs.readFileSync(req.file.path);
-    var encode_image = img.toString('base64');
-    var finalImg = {
-        contentType: req.file.mimetype,
-        data:Buffer.from(encode_image, 'base64'), 
-        path: req.file.path,
-     };
-     req.body.image=finalImg;
+    // var img = fs.readFileSync(req.file.path);
+    // var encode_image = img.toString('base64');
+    // var finalImg = {
+    //     contentType: req.file.mimetype,
+    //     data:Buffer.from(encode_image, 'base64'), 
+    //     path: req.file.path,
+    //  };
+    //  req.body.image=finalImg;
      req.body.password=bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
      //**********image upload */
      let user = await Users.create(req.body)
       //**********The Uploaded file will be removed from Upload folder
     //after adding the binary image in database Image */
-    fs.unlink(req.file.path, (err) => {
-        if (err) {
-          console.error(err)
-          return
-        }
-      console.log("The file is removed");
-      })
+    // fs.unlink(req.file.path, (err) => {
+    //     if (err) {
+    //       console.error(err)
+    //       return
+    //     }
+    //   console.log("The file is removed");
+    //   })
      res.send(req.body)
  })
+
 
  module.exports= router;

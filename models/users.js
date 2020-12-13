@@ -16,12 +16,13 @@ const usersSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true, 
-    },
-    image: { 
-        data: Buffer, 
-        contentType: String,
-        path: String, 
-    } ,
+    }
+    ,
+    // image: { 
+    //     data: Buffer, 
+    //     contentType: String,
+    //     path: String, 
+    // } ,
     isActive:{
         type: Boolean,
         default: false,
