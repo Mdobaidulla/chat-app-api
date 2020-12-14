@@ -61,6 +61,19 @@ router.get('/last_name/:id', async (req, res)=>{
     res.send(allUsers["last_name"]);
 });
 
+router.get('/userIdByEmail/:id', async (req, res)=>{
+    let allUsers = await Users.find({});
+
+    let targetId = '';
+    allUsers.forEach((user) => {
+        if (user['email'] == req.params.id) {
+            targetId = user['_id'];
+        }
+    });
+    res.send(targetId);
+});
+
+
 //GET_ONE_USER
 router.get('/:id', async (req, res)=>{
     
