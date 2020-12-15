@@ -61,6 +61,18 @@ router.get('/last_name/:id', async (req, res)=>{
     res.send(allUsers["last_name"]);
 });
 
+router.get('/email/:id', async (req, res)=>{
+    let allUsers = await Users.findById(req.params.id,(err, response)=>{
+        if (err){ 
+            console.log(err); 
+        } 
+        else{ 
+            console.log("Result : ", response); 
+        } 
+    });
+    res.send(allUsers["email"]);
+});
+
 router.get('/userIdByEmail/:id', async (req, res)=>{
     let allUsers = await Users.find({});
 
@@ -76,21 +88,22 @@ router.get('/userIdByEmail/:id', async (req, res)=>{
 
 //GET_ONE_USER
 router.get('/:id', async (req, res)=>{
-    
-    let allUsers;
-    try{
-        allUsers = await Users.findById(req.params.id,(err, respons)=>{
-            if (err){  
-                res.send("Error:", err);
-            } 
-            else{ 
-                console.log("Result : ", respons); 
-                res.send(allUsers);
-            } 
-        });
-    }
-    catch(e){
-        console.log(e.getMessage());
+    if (req.params.id == '') {
+        let allUsers;
+        try {
+            allUsers = await Users.findById(req.params.id,(err, respons)=>{
+                if (err){  
+                    res.send("Error:", err);
+                } 
+                else{ 
+                    console.log("Result : ", respons); 
+                    res.send(allUsers);
+                } 
+            });
+        }
+        catch(e){
+            console.log(e.getMessage());
+        }
     }
 });
 

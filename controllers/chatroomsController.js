@@ -72,6 +72,19 @@ router.post('/', async (req, res) =>{
      res.send(chatroom)
  });
 
+ //UPDATE ROUTE FOR CHATROOM
+//This route will delete a chatroom
+router.put('/:id', async (req, res) =>{
+    console.log(req.body);
+    Chatrooms.findById(req.params.id, (err, foundChatroom) => {
+        foundChatroom.users = req.body.users;
+        foundChatroom.isActive = true;
+        foundChatroom.save((err, foundDrivein) => {
+          res.redirect(`/chatrooms/${req.params.id}`);
+        });
+      });
+ });
+
 //DELETE ROUTE FOR CHATROOM
 //This route will delete a chatroom
  router.delete('/:id', async (req, res) =>{
