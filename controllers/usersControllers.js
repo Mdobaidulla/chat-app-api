@@ -121,5 +121,24 @@ router.post('/',upload.single('image'), async (req, res) =>{
      res.send(req.body)
  })
 
+ //PUT
+ //This route will Allow user to update their profile
+ router.put('/:userId', async (req, res) => {
+    let user =await Users.findByIdAndUpdate({_id:req.params.userId},
+       {
+           first_name:req.body.first_name,
+           last_name:req.body.last_name,
+           email:req.body.email,
+       },
+       (error, updated)=>{
+        if(error){
+            console.log(error);
+        }else{
+            console.log(updated);
+        }
+    })
+    res.send(user);
+  });
+
 
  module.exports= router;
