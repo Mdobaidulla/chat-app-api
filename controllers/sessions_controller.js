@@ -4,8 +4,9 @@ const router = express.Router()
 const User = require('../models/users.js')
 let currentUser;
 router.get('/new', (req, res) => {
+  currentUser=req.session;
   res.send(currentUser)
-})
+});
 
 // on sessions form submit (log in)
 router.post('/', (req, res) => {
@@ -18,14 +19,10 @@ router.post('/', (req, res) => {
       res.send("Sorry, no user found")
     } else {
       if (bcrypt.compareSync(req.body.password, foundUser.password)) {
-        // add the user to our session
-          req.currentUser = req.session
-        // redirect back to our home page
-
+        // currentUser=req.session;
+        // currentUser.username;
         res.send(foundUser);
-       
       } else {
-        // passwords do not match
         res.send(401)
       }
    
