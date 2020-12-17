@@ -16,8 +16,11 @@ const usersSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true, 
-    }
-    ,
+    },
+    security: {
+        type: String,
+        required: true,
+    },
     // image: { 
     //     data: Buffer, 
     //     contentType: String,
