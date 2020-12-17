@@ -4,13 +4,13 @@ const router = express.Router()
 const User = require('../models/users.js')
 let currentUser;
 router.get('/new', (req, res) => {
-  currentUser=req.session;
+  //currentUser=req.session;
   res.send(currentUser)
 });
 
 // on sessions form submit (log in)
-router.post('/', (req, res) => {
-  User.findOne({ email: req.body.email }, (err, foundUser) => {
+router.post('/', async(req, res) => {
+  await User.findOne({ email: req.body.email }, (err, foundUser) => {
     console.log(foundUser);
     if (err) {
       console.log(err)
@@ -20,8 +20,12 @@ router.post('/', (req, res) => {
     } else {
       if (bcrypt.compareSync(req.body.password, foundUser.password)) {
         // currentUser=req.session;
-        // currentUser.username;
+        // currentUser.email;
+        if(foundUser.isActive){
         res.send(foundUser);
+        }else{
+          res.send(401)
+        }
       } else {
         res.send(401)
       }
