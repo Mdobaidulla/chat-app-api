@@ -84,6 +84,13 @@ io.on('connection', socket => {
     console.log('text_message: ', text_msg)
     io.sockets.emit('text_message', text_msg)
   })
+
+  // socket.on('delete_chatroom', (text_msg) => {
+  //   // once we get a 'change color' event from one of our clients, we will send it to the rest of the clients
+  //   // we make use of the socket.emit method again with the argument given to use from the callback function above
+  //   console.log('delete_chatroom: ', text_msg)
+  //   io.sockets.emit('delete_chatroom', text_msg)
+  // })
   
   // disconnect is fired when a client leaves the server
   socket.on('disconnect', () => {
