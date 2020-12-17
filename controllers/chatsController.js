@@ -35,17 +35,17 @@ router.get('/chatroom/:id', async (req, res)=>{
 
 //SHOW ROUTE FOR CHAT
 //This route will read the specified chat from chat-app-api database
-router.get('/:id', async (req, res)=>{
-    let allChats = await Chats.findById(req.params.id,(err, response)=>{
-        if (err){ 
-            console.log(err); 
-        } 
-        else{ 
-            console.log("Result : ", response); 
-        } 
-    });
-    res.send(allChats);
-});
+// router.get('/:id', async (req, res)=>{
+//     let allChats = await Chats.findById(req.params.id,(err, response)=>{
+//         if (err){ 
+//             console.log(err); 
+//         } 
+//         else{ 
+//             console.log("Result : ", response); 
+//         } 
+//     });
+//     res.send(allChats);
+// });
 
 //NEW ROUTE FOR CHAT
 //This route will add a new chat
