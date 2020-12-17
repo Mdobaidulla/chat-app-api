@@ -1,7 +1,9 @@
 
+require('dotenv').config()
 //Dependencies
 const express = require('express');
 let cors = require('cors')
+
 
 
 // const methodOverride  = require('method-override');
@@ -22,7 +24,6 @@ const io = require('socket.io')(server, {
 });
 //----socket works until here----
 
-
 const db = mongoose.connection;
 //Port
 const PORT = process.env.PORT || 5000;
@@ -37,6 +38,13 @@ mongoose.connect(MONGODB_URI ,  {
     useCreateIndex: true,
   });
 
+  const isAuthenticated = (req, res, next) => {
+    if (req.session.currentUser) {
+      return next()
+    } else {
+      res.redirect('/sessions/new')
+    }
+  }
 
 // Error / success messages
 db.on('error', (err) => console.log(err.message + ' is Mongod not running?'));
@@ -45,6 +53,7 @@ db.on('disconnected', () => console.log('mongo disconnected'));
 db.on('open' , ()=>{});
 
 //use public folder for static assets
+
 app.use(express.static('public'));
 // populates req.body with parsed info from forms - if no data from forms will return an empty object {}
 app.use(express.urlencoded({ extended: false }));// extended: false - does not allow nested objects in query strings
