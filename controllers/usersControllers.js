@@ -155,7 +155,7 @@ router.post('/', async(req, res) => {
         },
         (error, updated)=>{
          if(error){
-             res.send("<p> Your code is not valid</p>")
+             res.send("<p> Your security code is not valid</p>")
          }else{
              const home_page='https://chat-app-john-md-ui.herokuapp.com';
               let logo='https://res.cloudinary.com/dpggpg7su/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1608172807/logo_aegy9a.png'
