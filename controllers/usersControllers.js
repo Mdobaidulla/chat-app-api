@@ -126,7 +126,7 @@ router.post('/', async(req, res) => {
           console.log(error);
         }
         //adding this for sending email
-        const url=`${process.env.BASE_URL}/users/${securityCode}/verify/${req.body.email}`;
+        const url=`https://chat-app-john-md.herokuapp.com/users/${securityCode}/verify/${req.body.email}`;
         const footers="<div style='display:flex;flex-direction:column;'><br><br><br><br><br><p>Thank You,</p><p><b>Pru Full-stack Developers App</b></p><p><i>Md Obaidulla & John Murphy</i></p></div>"
         let logo='https://res.cloudinary.com/dpggpg7su/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1608172807/logo_aegy9a.png'
         let message="<div style='background:#f58002;color:#FFFFFF;display:flex;'><img style='width:12vh;' src="+logo+"><center><h1>Pru Full-stack Developers</h1></center></div><br>Dear "+req.body.first_name+" "+req.body.last_name+",<br> <b>Do't click on the link if you are not expecting the verification</b>.<br> To verify <a href="+url+">Click</a> here and complete the registration<br> You can copy and past the link on your browser "+url+footers;
@@ -157,7 +157,7 @@ router.post('/', async(req, res) => {
          if(error){
              res.send("<p> Your code is not valid</p>")
          }else{
-             const home_page='http://localhost:3000';
+             const home_page='https://chat-app-john-md-ui.herokuapp.com';
               let logo='https://res.cloudinary.com/dpggpg7su/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1608172807/logo_aegy9a.png'
                     let message="<div style='background:#f58002;color:#FFFFFF;display:flex;justify-content:space-between;'><img style='width:10vh;' src="+logo+"><center><h1>Pru Full-stack Developers</h1></center></div>";
              res.send(message+"<p>You have successfully verified your email </p><a href='"+home_page+"'>click</a> here for login")
